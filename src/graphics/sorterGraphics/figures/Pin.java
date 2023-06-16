@@ -1,0 +1,19 @@
+package graphics.sorterGraphics.figures;
+
+import java.awt.*;
+
+public class Pin{
+    int x;
+    int y;
+
+    public Pin(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public void draw(Graphics2D g2d){
+        g2d.drawLine(x, y, x-20, y-20);
+        g2d.drawLine(x, y, x+20, y-20);
+        g2d.drawLine(x-20, y-20, x+20, y-20);
+    }
+}
