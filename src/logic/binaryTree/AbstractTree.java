@@ -1,21 +1,24 @@
 package logic.binaryTree;
 
+import java.awt.*;
 import java.util.ArrayList;
 
+import graphics.binaryTreeGraphics.ActionManager;
 import graphics.binaryTreeGraphics.TreePanel;
+import util.Util;
 
 
 public abstract class AbstractTree<K extends Comparable<K>> {
     protected Node<K> root;
 
-    protected TreePanel<K> treePanel;
+    protected ActionManager actionManager;
 
     public Node<K> getRoot() {
         return root;
     }
 
-    public void setPanel(TreePanel<K> P) {
-        this.treePanel = P;
+    public void setActionManager(ActionManager actionManager) {
+        this.actionManager = actionManager;
     }
 
     public ArrayList<K> PreOrder() {
@@ -126,6 +129,24 @@ public abstract class AbstractTree<K extends Comparable<K>> {
             }
         }
         return i;
+    }
+
+    public void printTree(Node<?> Tree, Graphics2D g2d) {
+        if (Tree != null) {
+
+            Util.drawFill(Tree, g2d);
+            Util.drawO(Tree, g2d);
+
+            if (!(Tree.getLeft() == null)) {
+                printTree(Tree.getLeft(), g2d);
+                Util.drawL(Tree, Tree.getLeft(), g2d);
+            }
+
+            if (!(Tree.getRight() == null)) {
+                printTree(Tree.getRight(), g2d);
+                Util.drawL(Tree, Tree.getRight(), g2d);
+            }
+        }
     }
 
     public abstract void insert(Node<K> node);

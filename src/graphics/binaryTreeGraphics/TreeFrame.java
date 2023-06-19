@@ -13,10 +13,11 @@ public class TreeFrame extends JFrame{
         this.setSize(Util.FRAMEWIDTH, Util.FRAMEHEIGHT);
         this.setResizable(true);
         this.setVisible(true);
-        TreePanel<K> p = new TreePanel<>(T);
-        T.setPanel(p);
+        ActionManager actionManager = new ActionManager();
+        TreePanel<K> p = new TreePanel<>(T, actionManager);
+        T.setActionManager(actionManager);
 
-        PanelProva prova = new PanelProva();
+        ButtonPanel<K> prova = new ButtonPanel<>(T, actionManager);
         prova.setBackground(Color.blue);
         JSplitPane container = new JSplitPane(JSplitPane.VERTICAL_SPLIT, p, prova);
         container.setTopComponent(p);

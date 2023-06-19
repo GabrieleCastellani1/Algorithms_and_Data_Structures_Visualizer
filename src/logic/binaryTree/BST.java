@@ -100,7 +100,7 @@ public class BST<K extends Comparable<K>> extends AbstractTree<K> {
             }
         }
         this.setAllCoordinates(this.root, 390, 100, 200, 50);
-        treePanel.insert(z.key, dir);
+        actionManager.insert(z.key, this, dir);
     }
 
     @Override

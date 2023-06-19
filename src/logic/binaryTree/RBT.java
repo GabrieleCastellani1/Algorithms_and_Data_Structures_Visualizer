@@ -49,7 +49,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
 
     public void LeftRotate(Node<K> y, Node<K> x) {//ruota x figlio destro di y a sinistra
 
-        treePanel.rotate(Direction.LEFT, y);
+        actionManager.rotate(Direction.LEFT, y);
 
         y.right = x.left;
         y.right.parent = y;
@@ -67,7 +67,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
 
     public void RightRotate(Node<K> y, Node<K> x) {//ruota x figlio sinistro di y a destra
 
-        treePanel.rotate(Direction.RIGHT, y);
+        actionManager.rotate(Direction.RIGHT, y);
 
         y.left = x.right;
         y.left.parent = y;
@@ -114,7 +114,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
 
         this.setAllCoordinates(this.root, 390, 100, 200, 50);
 
-        treePanel.insert(z.key, dir);
+        actionManager.insert(z.key, this, dir);
 
         if (!z.equals(root)) {
             insertFixUp(z);
