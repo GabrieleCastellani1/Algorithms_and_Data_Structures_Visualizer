@@ -1,15 +1,13 @@
 package graphics.action.concreteActions;
 
-import javax.swing.Timer;
-
+import enums.Direction;
 import graphics.action.AbstractAction;
 import logic.binaryTree.Node;
-import graphics.binaryTreeGraphics.TreePanel.Direction;
 
+import javax.swing.*;
 import java.awt.*;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Rotation extends AbstractAction implements ActionListener {
 

@@ -1,16 +1,15 @@
 package graphics.action.concreteActions;
 
-import javax.swing.*;
-
+import enums.Direction;
 import graphics.action.AbstractAction;
 import logic.binaryTree.Node;
 import util.Util;
-import graphics.binaryTreeGraphics.TreePanel.Direction;
 
-import java.util.Vector;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
 
 public class Insertion extends AbstractAction implements ActionListener {
 

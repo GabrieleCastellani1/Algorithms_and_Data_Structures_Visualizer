@@ -1,5 +1,6 @@
 package graphics.binaryTreeGraphics;
 
+import enums.Direction;
 import graphics.action.AbstractAction;
 import graphics.action.ActionFactory;
 import logic.binaryTree.AbstractTree;
@@ -18,18 +19,13 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
     private final JButton deleteButton;
     private final ActionFactory factory;
 
+    private Thread buttonThread;
+
     public AbstractAction getAction() {
         return action;
     }
 
-    public Graphics2D getG2d() {
-        return g2d;
-    }
 
-    public enum Direction {
-        LEFT,
-        RIGHT
-    }
 
     public TreePanel(AbstractTree<K> tree) {
 
@@ -47,33 +43,29 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
             K Jtext = setText(insertText.getText());
             insertText.setText("");
             Node<K> node = tree.createTreeNode(Jtext);
-            Thread t = new Thread(() -> {
+            buttonThread = new Thread(() -> {
                 insertButton.setEnabled(false);
                 deleteButton.setEnabled(false);
                 Tree.insert(node);
-                while(action != null && action.isRunning()){
-                    Thread.onSpinWait();
-                }
+                waitAction();
                 insertButton.setEnabled(true);
                 deleteButton.setEnabled(true);
             });
-            t.start();
+            buttonThread.start();
         });
 
         deleteButton.addActionListener(e -> {
             K Jtext = setText(deleteText.getText());
             deleteText.setText("");
-            Thread t = new Thread(() -> {
+            buttonThread = new Thread(() -> {
                 insertButton.setEnabled(false);
                 deleteButton.setEnabled(false);
                 Tree.delete(Jtext);
-                while(action != null && action.isRunning()){
-                    Thread.onSpinWait();
-                }
+                waitAction();
                 insertButton.setEnabled(true);
                 deleteButton.setEnabled(true);
             });
-            t.start();
+            buttonThread.start();
         });
         
         this.setLayout(null);
@@ -85,9 +77,13 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
         factory = new ActionFactory();
     }
 
-    public void waitAction(){
+    public synchronized void waitAction(){
         while(action != null){
-            Thread.onSpinWait();
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -105,6 +101,7 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
     public void insert(K k, Vector<Direction> directions) {
         waitAction();
         this.action = factory.createInsertion(directions, Tree.getRoot(), new Node<>(k));
+        waitAction();
     }
 
     public void rotate(Direction dir, Node<K> pivot) {
@@ -114,9 +111,9 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public synchronized void paint(Graphics g) {
         g2d = (Graphics2D) g;
-        super.paintComponent(g2d);
+        super.paint(g2d);
 
         AbstractAction print = factory.createPrint(Tree.getRoot());
         print.doAction(g2d);
@@ -125,6 +122,7 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
             action.doAction(g2d);
         }else{
             action = null;
+            notify();
         }
 
         repaint();

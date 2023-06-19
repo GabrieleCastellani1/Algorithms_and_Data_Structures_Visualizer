@@ -3,7 +3,7 @@ package logic.binaryTree;
 import java.util.Objects;
 import java.util.Vector;
 
-import graphics.binaryTreeGraphics.TreePanel.Direction;
+import enums.Direction;
 
 import java.awt.Color;
 
@@ -109,6 +109,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
                 y.right = z;
             }
         }
+
         z.color = Color.RED;
 
         this.setAllCoordinates(this.root, 390, 100, 200, 50);

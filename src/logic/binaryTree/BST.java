@@ -1,6 +1,6 @@
 package logic.binaryTree;
 
-import graphics.binaryTreeGraphics.TreePanel.Direction;
+import enums.Direction;
 
 import java.awt.*;
 import java.util.ArrayList;

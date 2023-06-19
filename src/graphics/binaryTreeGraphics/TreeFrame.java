@@ -15,20 +15,18 @@ public class TreeFrame extends JFrame{
         this.setVisible(true);
         TreePanel<K> p = new TreePanel<>(T);
         T.setPanel(p);
-        /*
-        p.setSize(400, 600);
-        JPanel container = new JPanel();
-        container.setLayout(new GridLayout());
+
         PanelProva prova = new PanelProva();
         prova.setBackground(Color.blue);
-        prova.setSize(400, 600);
-        container.add(p);
-        container.add(prova);
+        JSplitPane container = new JSplitPane(JSplitPane.VERTICAL_SPLIT, p, prova);
+        container.setTopComponent(p);
+        container.setBottomComponent(prova);
+        container.setDividerLocation(400);
+        container.setPreferredSize(new Dimension(800,600));
         container.setVisible(true);
-        */
+
         p.setBackground(Color.white);
         p.repaint();
-        //this.add(container);
-        this.add(p);
+        this.add(container);
     }
 }

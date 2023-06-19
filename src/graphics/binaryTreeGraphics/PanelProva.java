@@ -4,19 +4,52 @@ import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PanelProva extends JPanel {
     public PanelProva(){
-        JButton button1 = Util.createButton(0, 0, "bottone");
-        JTextField textField1 = Util.createTextField(100, 100);
-        JButton button2 = Util.createButton(100, 100, "bottone");
-        JTextField textField2 = Util.createTextField(100, 100);
-        this.add(button1);
-        this.add(textField1);
-        this.add(button2);
-        this.add(textField2);
-        this.setLayout(new GridLayout(3, 4, 5, 10));
-        this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+
+        JButton insertButton = new JButton();
+        insertButton.setMaximumSize(new Dimension(200,50));
+        insertButton.addActionListener(e -> {
+
+        });
+
+        JTextField insertText = new JTextField();
+        insertText.setPreferredSize(new Dimension(50,50));
+        insertText.setMaximumSize(new Dimension(50,50));
+
+        JButton deleteButton = new JButton();
+        deleteButton.setMaximumSize(new Dimension(200,50));
+
+        JTextField deleteText = new JTextField();
+        deleteText.setMaximumSize(new Dimension(50,50));
+        deleteText.setPreferredSize(new Dimension(50,50));
+
+        this.add(new Box.Filler(
+                        new Dimension(5, 50),
+                        new Dimension(5, 50),
+                        new Dimension(50, 50)
+                )
+        );
+        this.add(insertButton);
+        this.add(insertText);
+        this.add(new Box.Filler(
+                new Dimension(5, 50),
+                new Dimension(5, 50),
+                new Dimension(800, 50))
+        );
+        this.add(deleteButton);
+        this.add(deleteText);
+        this.add(new Box.Filler(
+                        new Dimension(5, 50),
+                        new Dimension(5, 50),
+                        new Dimension(50, 50)
+                )
+        );
         this.setVisible(true);
     }
 }
