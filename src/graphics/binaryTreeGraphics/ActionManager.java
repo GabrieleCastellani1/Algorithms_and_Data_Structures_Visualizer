@@ -9,8 +9,13 @@ import logic.binaryTree.Node;
 import java.util.Vector;
 
 public class ActionManager {
-    private volatile AbstractAction action = null;
-    private final ActionFactory factory = new ActionFactory();
+    private volatile AbstractAction action;
+    private final ActionFactory factory;
+
+    public ActionManager() {
+        this.factory = new ActionFactory();
+        this.action = null;
+    }
 
     public <K extends Comparable<K>> void insert(K k, AbstractTree<K> tree, Vector<Direction> directions) {
         waitAction();

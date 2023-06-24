@@ -8,9 +8,7 @@ import java.awt.*;
 
 public class TreePanel<K extends Comparable<K>> extends JPanel {
     private final AbstractTree<K> tree;
-    private Graphics2D g2d;
     private final ActionManager actionManager;
-
 
     public TreePanel(AbstractTree<K> tree, ActionManager actionManager) {
 
@@ -18,11 +16,13 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
 
         this.actionManager = actionManager;
 
+        this.setBackground(Color.white);
+
     }
 
     @Override
     public void paint(Graphics g) {
-        g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
         super.paint(g2d);
 
         tree.printTree(tree.getRoot(), g2d);

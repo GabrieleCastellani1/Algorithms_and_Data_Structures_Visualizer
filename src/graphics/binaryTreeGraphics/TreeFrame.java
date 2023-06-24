@@ -8,26 +8,24 @@ import java.awt.*;
 
 public class TreeFrame extends JFrame{
 
-    public <K extends Comparable<K>> TreeFrame(AbstractTree<K> T){
+    public <K extends Comparable<K>> TreeFrame(AbstractTree<K> tree){
         super();
         this.setSize(Util.FRAMEWIDTH, Util.FRAMEHEIGHT);
         this.setResizable(true);
         this.setVisible(true);
         ActionManager actionManager = new ActionManager();
-        TreePanel<K> p = new TreePanel<>(T, actionManager);
-        T.setActionManager(actionManager);
+        TreePanel<K> p = new TreePanel<>(tree, actionManager);
+        tree.setActionManager(actionManager);
 
-        ButtonPanel<K> prova = new ButtonPanel<>(T, actionManager);
-        prova.setBackground(Color.blue);
-        JSplitPane container = new JSplitPane(JSplitPane.VERTICAL_SPLIT, p, prova);
+        TreeButtonPanel<K> treeButtonPanel = new TreeButtonPanel<>(tree, actionManager);
+
+        JSplitPane container = new JSplitPane(JSplitPane.VERTICAL_SPLIT, p, treeButtonPanel);
         container.setTopComponent(p);
-        container.setBottomComponent(prova);
+        container.setBottomComponent(treeButtonPanel);
         container.setDividerLocation(400);
         container.setPreferredSize(new Dimension(800,600));
         container.setVisible(true);
 
-        p.setBackground(Color.white);
-        p.repaint();
         this.add(container);
     }
 }

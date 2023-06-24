@@ -2,7 +2,7 @@ package graphics.sorterGraphics.figures;
 
 import java.awt.*;
 
-public class Rectangle {
+public class Rectangle implements Figure{
 
     public int x;
     public int y;
@@ -17,6 +17,7 @@ public class Rectangle {
         this.height = height;
     }
 
+    @Override
     public void draw(Graphics2D g2d) {
         g2d.setColor(color);
         g2d.drawRect(x, y, width, height);

@@ -2,13 +2,14 @@ package graphics.sorterGraphics.figures;
 
 import java.awt.*;
 
-public class Square <K extends Comparable<K>>{
+public class Square <K extends Comparable<K>> implements Figure{
     public int x;
     public int y;
     public int sideLength;
-    K key;
+    private final K key;
     public Color color = Color.WHITE;
 
+    @Override
     public void draw(Graphics2D g2d) {
         g2d.setColor(this.color);
         g2d.fillRect(x, y, sideLength, sideLength);
@@ -27,4 +28,10 @@ public class Square <K extends Comparable<K>>{
         this.y = y;
         this.sideLength = sideLength;
     }
+
+    public K getKey() {
+        return key;
+    }
+
+
 }

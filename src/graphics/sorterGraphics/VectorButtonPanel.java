@@ -1,22 +1,16 @@
-package graphics.binaryTreeGraphics;
+package graphics.sorterGraphics;
 
-import logic.binaryTree.AbstractTree;
-import logic.binaryTree.Node;
+import logic.sorter.AbstractSorter;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ButtonPanel <K extends Comparable<K>> extends JPanel {
-    private final AbstractTree<K> tree;
-    private final ActionManager actionManager;
-    private Thread buttonThread;
+public class VectorButtonPanel <K extends Comparable<K>> extends JPanel{
 
-    public ButtonPanel(AbstractTree<K> tree, ActionManager actionManager) {
-        this.tree = tree;
-
-        this.actionManager = actionManager;
+    public VectorButtonPanel(AbstractSorter<K> ord){
 
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        this.setBackground(Color.BLUE);
 
         JButton insertButton = new JButton();
         insertButton.setText("Inserisci");
@@ -34,34 +28,36 @@ public class ButtonPanel <K extends Comparable<K>> extends JPanel {
         deleteText.setMaximumSize(new Dimension(50, 50));
         deleteText.setPreferredSize(new Dimension(50, 50));
 
+        JButton doSortButton = new JButton();
+        doSortButton.setText("Ordina");
+        doSortButton.setMaximumSize(new Dimension(200, 50));
+
         insertButton.addActionListener(e -> {
-            K Jtext = setText(insertText.getText());
+        K Jtext = setText(insertText.getText());
             insertText.setText("");
-            Node<K> node = this.tree.createTreeNode(Jtext);
-            buttonThread = new Thread(() -> {
-                insertButton.setEnabled(false);
-                deleteButton.setEnabled(false);
-                this.tree.insert(node);
-                this.actionManager.waitAction();
-                insertButton.setEnabled(true);
-                deleteButton.setEnabled(true);
-            });
-            buttonThread.start();
-        });
+            ord.add(Jtext);
+            ord.getActionManager().addSquare(Jtext);
+    });
 
         deleteButton.addActionListener(e -> {
-            K Jtext = setText(deleteText.getText());
-            deleteText.setText("");
-            buttonThread = new Thread(() -> {
-                insertButton.setEnabled(false);
-                deleteButton.setEnabled(false);
-                this.tree.delete(Jtext);
-                this.actionManager.waitAction();
-                insertButton.setEnabled(true);
-                deleteButton.setEnabled(true);
-            });
-            buttonThread.start();
+        K Jtext = setText(deleteText.getText());
+        ord.remove(Jtext);
+        ord.getActionManager().removeSquare(Jtext);
+        deleteText.setText("");
+    });
+
+        doSortButton.addActionListener(e -> {
+        Thread t = new Thread(() -> {
+            insertButton.setEnabled(false);
+            deleteButton.setEnabled(false);
+            doSortButton.setEnabled(false);
+            ord.doSort();
+            insertButton.setEnabled(true);
+            deleteButton.setEnabled(true);
+            doSortButton.setEnabled(true);
         });
+        t.start();
+    });
 
         this.add(new Box.Filler(
                         new Dimension(5, 50),
@@ -76,6 +72,15 @@ public class ButtonPanel <K extends Comparable<K>> extends JPanel {
                 new Dimension(5, 50),
                 new Dimension(800, 50))
         );
+
+        this.add(doSortButton);
+
+        this.add(new Box.Filler(
+                new Dimension(5, 50),
+                new Dimension(5, 50),
+                new Dimension(800, 50))
+        );
+
         this.add(deleteButton);
         this.add(deleteText);
         this.add(new Box.Filler(

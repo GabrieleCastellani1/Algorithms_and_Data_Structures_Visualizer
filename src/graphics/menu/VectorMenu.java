@@ -46,15 +46,13 @@ public class VectorMenu extends JFrame{
     private <K extends Comparable<K>> void createSort(SorterType sortType){
         Vector<K> v = new Vector<>(10);
         AbstractSorter<K> ord = chooseSorter(sortType, v);
-        VectorPanel<K> P = new VectorPanel<>(v, ord,100, 100, 80);
         assert ord != null;
-        ord.setPanel(P);
-        JFrame F = new VectorFrame(P);
+        JFrame F = new VectorFrame(ord);
         Util.setLocationToTopRight(F);
     }
 
     private <K extends Comparable<K>> AbstractSorter<K> chooseSorter(SorterType sorterType, Vector<K> v){
-        SorterFactory factory = new SorterFactory();
+        SorterFactory<K> factory = new SorterFactory<>();
         switch (sorterType) {
             case SELECTIONSORT: {
                 return factory.createSelectionSort(v);
@@ -68,7 +66,7 @@ public class VectorMenu extends JFrame{
             case QUICKSORT: {
                 return factory.createQuickSort(v);
             }
-            case OPTQUICKSORT: {
+            case OPTIMIZEDQUICKSORT: {
                 return factory.createOptQuickSort(v);
             }
             default : {

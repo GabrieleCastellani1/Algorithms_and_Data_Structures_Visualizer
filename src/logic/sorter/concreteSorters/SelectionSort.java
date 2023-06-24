@@ -1,12 +1,17 @@
 package logic.sorter.concreteSorters;
 
-import graphics.action.AbstractAction;
+import graphics.sorterGraphics.ActionManager;
 import logic.sorter.AbstractSorter;
 import util.Util;
 
 import java.awt.*;
+import java.util.Vector;
 
 public class SelectionSort <K extends Comparable<K>> extends AbstractSorter<K> {
+
+    public SelectionSort(Vector<K> v, ActionManager<K> actionManager) {
+        super(v, actionManager);
+    }
 
     public void doSort (){
             K min = v.elementAt(0);
@@ -15,8 +20,8 @@ public class SelectionSort <K extends Comparable<K>> extends AbstractSorter<K> {
             while(count < v.size()-1) {
                 for (int i = count; i < v.size(); i++) {
 
-                    P.removeAllRect();
-                    P.highlightElement(count);
+                    actionManager.removeAllRect();
+                    actionManager.highlightElement(count);
                     Util.waitAction(1000);
 
                     if (v.elementAt(i).compareTo(min) < 0) {
@@ -24,16 +29,13 @@ public class SelectionSort <K extends Comparable<K>> extends AbstractSorter<K> {
                         minpos = i;
                     }
 
-                    P.addPin(i);
+                    actionManager.addPin(i);
 
                 }
 
-                P.removeAllPins();
-                P.color(minpos, Color.GREEN);
-                AbstractAction ac = P.swap(minpos, count);
-                while(ac.isRunning()){
-                    System.console();
-                }
+                actionManager.removeAllPins();
+                actionManager.color(minpos, Color.GREEN);
+                actionManager.swap(minpos, count);
 
                 v.set(minpos, v.elementAt(count));
                 v.set(count, min);
