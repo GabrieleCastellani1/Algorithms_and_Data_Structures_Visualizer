@@ -43,7 +43,6 @@ public class TreeButtonPanel<K extends Comparable<K>> extends JPanel {
                 insertButton.setEnabled(false);
                 deleteButton.setEnabled(false);
                 this.tree.insert(node);
-                this.actionManager.waitAction();
                 insertButton.setEnabled(true);
                 deleteButton.setEnabled(true);
             });
@@ -57,7 +56,6 @@ public class TreeButtonPanel<K extends Comparable<K>> extends JPanel {
                 insertButton.setEnabled(false);
                 deleteButton.setEnabled(false);
                 this.tree.delete(Jtext);
-                this.actionManager.waitAction();
                 insertButton.setEnabled(true);
                 deleteButton.setEnabled(true);
             });

@@ -80,20 +80,9 @@ public abstract class AbstractTree<K extends Comparable<K>> {
         }
     }
 
-    //x = 390, y = 100, node = root, xDist = 200, yDist = 50
-    public void setAllCoordinates(Node<K> node, int x, int y, int xDist, int yDist) {
-        if (node != null) {
-            node.coordinate = new int[]{x, y};
-            setAllCoordinates(node.left, x - xDist, y + yDist, xDist / 2, yDist);
-            setAllCoordinates(node.right, x + xDist, y + yDist, xDist / 2, yDist);
-        }
-    }
-
-    public void TreeReconstruct(ArrayList<K> P, ArrayList<K> I) {
-        int xDist = 200;
-        int yDist = 50;
+    public void TreeReconstruct(ArrayList<K> P, ArrayList<K> I, int x, int y, int xDist, int yDist) {
         root = new Node<>(null);
-        root.coordinate = new int[]{390, 100};
+        root.coordinate = new int[]{x, y};
         TreeReconstructAux(P, I, 0, P.size(), 0, I.size(), root, xDist, yDist);
     }
 

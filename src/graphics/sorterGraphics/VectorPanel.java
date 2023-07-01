@@ -25,8 +25,8 @@ public class VectorPanel <K extends Comparable<K>> extends JPanel {
         }
     }
 
-    public void paint(Graphics g){
-        super.paint(g);
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         Iterator<AbstractAction> it = actionManager.getAllActions().iterator();
         while(it.hasNext()){

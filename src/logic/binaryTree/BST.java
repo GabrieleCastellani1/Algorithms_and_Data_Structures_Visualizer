@@ -99,7 +99,7 @@ public class BST<K extends Comparable<K>> extends AbstractTree<K> {
                 y.right = z;
             }
         }
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
+        actionManager.setAllCoordinates(this.root);
         actionManager.insert(z.key, this, dir);
     }
 
@@ -134,7 +134,7 @@ public class BST<K extends Comparable<K>> extends AbstractTree<K> {
         if (z != x) {
             z.key = x.key;
         }
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
+        actionManager.setAllCoordinates(this.root);
     }
 
     public ArrayList<K> Sort(K[] A) {//ordina un array creando un bst e facendo poi una InOrder di questo

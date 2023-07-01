@@ -112,8 +112,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
 
         z.color = Color.RED;
 
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
-
+        actionManager.setAllCoordinates(this.root);
         actionManager.insert(z.key, this, dir);
 
         if (!z.equals(root)) {
@@ -126,7 +125,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
             root = root.parent;
         }
 
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
+        actionManager.setAllCoordinates(this.root);
     }
 
     public void insertFixUp(Node<K> x) {
@@ -222,7 +221,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
         while (Objects.requireNonNull(root).key != null && root.parent.key != null) {
             root = root.parent;
         }
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
+        actionManager.setAllCoordinates(this.root);
     }
 
     public void deleteFixUp(Node<K> z) {

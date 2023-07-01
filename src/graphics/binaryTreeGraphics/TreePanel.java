@@ -2,6 +2,8 @@ package graphics.binaryTreeGraphics;
 
 import graphics.action.AbstractAction;
 import logic.binaryTree.AbstractTree;
+import logic.binaryTree.Node;
+import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +11,9 @@ import java.awt.*;
 public class TreePanel<K extends Comparable<K>> extends JPanel {
     private final AbstractTree<K> tree;
     private final ActionManager actionManager;
+    private Dimension size;
 
-    public TreePanel(AbstractTree<K> tree, ActionManager actionManager) {
+    public TreePanel(AbstractTree<K> tree, ActionManager actionManager, Dimension size) {
 
         this.tree = tree;
 
@@ -18,12 +21,16 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
 
         this.setBackground(Color.white);
 
+        this.size = size;
+        actionManager.setSize(size);
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        super.paint(g2d);
+        super.paintComponent(g2d);
+
+        actionManager.setSize(this.getSize());
 
         tree.printTree(tree.getRoot(), g2d);
 
@@ -33,8 +40,26 @@ public class TreePanel<K extends Comparable<K>> extends JPanel {
             action.doAction(g2d);
         }else{
             actionManager.restoreAction();
+            actionManager.setAllCoordinates(tree.getRoot());
+            fixBorderCollisions(tree.getRoot());
         }
 
         repaint();
+    }
+
+    private void fixBorderCollisions(Node<?> node){
+        if(node != null){
+            if (node.getCoordinate()[0] + Util.OVALDIAMETER > size.width || node.getCoordinate()[0] < 0){
+                size = new Dimension(size.width + 1, size.height);
+                this.setPreferredSize(size);
+
+            }
+            if (node.getCoordinate()[1] + Util.OVALDIAMETER > size.height || node.getCoordinate()[1] < 0){
+                size = new Dimension(size.width, size.height + 1);
+                this.setPreferredSize(size);
+            }
+            fixBorderCollisions(node.getLeft());
+            fixBorderCollisions(node.getRight());
+        }
     }
 }

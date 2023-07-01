@@ -2,7 +2,6 @@ package graphics.action;
 
 import enums.Direction;
 import graphics.action.concreteActions.Insertion;
-import graphics.action.concreteActions.Print;
 import graphics.action.concreteActions.Rotation;
 import graphics.action.concreteActions.Swap;
 import graphics.sorterGraphics.figures.Square;
@@ -14,10 +13,6 @@ public class ActionFactory {
 
     public AbstractAction createInsertion(Vector<Direction> dir, Node<?> tree, Node<?> node) {
         return new Insertion(dir, tree, node);
-    }
-
-    public AbstractAction createPrint(Node<?> Tree) {
-        return new Print(Tree);
     }
 
     public AbstractAction createRotation(Direction dir, Node<?> pivot) {

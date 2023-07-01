@@ -21,6 +21,7 @@ public class Rotation extends AbstractAction implements ActionListener {
     private int xDistanceBetweenPivotAndGoingUpSon;
     private int yDistanceBetweenPivotAndGoingUpSon;
     private int count;
+    private int div;
 
     public Rotation(Direction dir,
                     Node<?> pivot) {
@@ -30,20 +31,21 @@ public class Rotation extends AbstractAction implements ActionListener {
         this.RightSon = pivot.getRight();
         this.leftSon = pivot.getLeft();
         this.count = 0;
+        div = 30;
 
         switch (dir) {
             case LEFT: {
-                xDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[0] - leftSon.getCoordinate()[0]) / 2) / 50;
-                yDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[1] - leftSon.getCoordinate()[1])) / 50;
-                xDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[0] - RightSon.getCoordinate()[0]) / 50;
-                yDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[1] - RightSon.getCoordinate()[1]) / 50;
+                xDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[0] - leftSon.getCoordinate()[0]) / 2) / div;
+                yDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[1] - leftSon.getCoordinate()[1])) / div;
+                xDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[0] - RightSon.getCoordinate()[0]) / div;
+                yDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[1] - RightSon.getCoordinate()[1]) / div;
                 break;
             }
             case RIGHT: {
-                xDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[0] - RightSon.getCoordinate()[0]) / 2) / 50;
-                yDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[1] - RightSon.getCoordinate()[1])) / 50;
-                xDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[0] - leftSon.getCoordinate()[0]) / 50;
-                yDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[1] - leftSon.getCoordinate()[1]) / 50;
+                xDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[0] - RightSon.getCoordinate()[0]) / 2) / div;
+                yDistanceGoingDownSon = (Math.abs(pivot.getCoordinate()[1] - RightSon.getCoordinate()[1])) / div;
+                xDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[0] - leftSon.getCoordinate()[0]) / div;
+                yDistanceBetweenPivotAndGoingUpSon = Math.abs(pivot.getCoordinate()[1] - leftSon.getCoordinate()[1]) / div;
                 break;
             }
         }
@@ -53,7 +55,7 @@ public class Rotation extends AbstractAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (count < 50) {
+        if (count < div) {
             switch (dir) {
                 case LEFT: {
                     pushDownNode(pivot, xDistanceBetweenPivotAndGoingUpSon, yDistanceBetweenPivotAndGoingUpSon, dir);

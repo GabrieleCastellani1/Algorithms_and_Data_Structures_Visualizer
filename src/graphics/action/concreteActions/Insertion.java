@@ -43,16 +43,16 @@ public class Insertion extends AbstractAction implements ActionListener {
     private void calculateDistance() {
         switch (d) {
             case LEFT:
-                if (!(tree.getLeft() == null)) {
-                    xDistance = Math.abs((tree.getCoordinate()[0] - tree.getLeft().getCoordinate()[0]) / 50);
-                    yDistance = Math.abs((tree.getCoordinate()[1] - tree.getLeft().getCoordinate()[1]) / 50);
+                if (tree.getLeft() != null) {
+                    xDistance = Math.abs((tree.getCoordinate()[0] - tree.getLeft().getCoordinate()[0]) / 30);
+                    yDistance = Math.abs((tree.getCoordinate()[1] - tree.getLeft().getCoordinate()[1]) / 30);
                     tree = tree.getLeft();
                 }
                 break;
             case RIGHT:
-                if (!(tree.getRight() == null)) {
-                    xDistance = Math.abs((tree.getCoordinate()[0] - tree.getRight().getCoordinate()[0]) / 50);
-                    yDistance = Math.abs((tree.getCoordinate()[1] - tree.getRight().getCoordinate()[1]) / 50);
+                if (tree.getRight() != null) {
+                    xDistance = Math.abs((tree.getCoordinate()[0] - tree.getRight().getCoordinate()[0]) / 30);
+                    yDistance = Math.abs((tree.getCoordinate()[1] - tree.getRight().getCoordinate()[1]) / 30);
                     tree = tree.getRight();
                 }
                 break;
@@ -102,7 +102,7 @@ public class Insertion extends AbstractAction implements ActionListener {
     @Override
     public void doAction(Graphics2D g2d) {
         if (firstStart) {
-            int[] coordinate = new int[]{Util.XSTART, Util.YSTART};
+            int[] coordinate = new int[]{tree.getCoordinate()[0], tree.getCoordinate()[1]};
             insertionNode.setCoordinate(coordinate);
             firstStart = false;
             insert();
