@@ -10,12 +10,11 @@ public class Util {
 
     public static int OVALDIAMETER = 30;
     public static int OVALRAY = OVALDIAMETER / 2;
-    public static int XSTART = 390;
-    public static int YSTART = 100;
     public static int FRAMEWIDTH = 800;
     public static int FRAMEHEIGHT = 600;
     public static int BUTTONWIDTH = 220;
     public static int BUTTONHEIGHT = 50;
+    public static int SIDELENGTH = 70;
     public static final double cSpring = 24;
     public static final double l = 130;
     public static final double cRep = 40000;

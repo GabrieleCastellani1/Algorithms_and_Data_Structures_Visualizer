@@ -1,22 +1,20 @@
 package graphics.binaryTreeGraphics;
-import javax.swing.*;
 
 import logic.binaryTree.AbstractTree;
 import util.Util;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 
 public class TreeFrame extends JFrame{
 
     public <K extends Comparable<K>> TreeFrame(AbstractTree<K> tree){
         super();
-        this.setPreferredSize(new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT));
+        Dimension preferredDimension = new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT);
+        this.setPreferredSize(preferredDimension);
         this.setResizable(true);
         this.setVisible(true);
 
-        Dimension preferredDimension = new Dimension(Util.FRAMEWIDTH, Util.FRAMEHEIGHT);
         ActionManager actionManager = new ActionManager();
         TreePanel<K> p = new TreePanel<>(tree, actionManager, preferredDimension);
         tree.setActionManager(actionManager);

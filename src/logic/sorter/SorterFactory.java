@@ -3,15 +3,15 @@ package logic.sorter;
 import graphics.sorterGraphics.ActionManager;
 import graphics.sorterGraphics.VectorViewManager;
 import logic.sorter.concreteSorters.*;
+import util.Util;
 
 import java.util.Vector;
 
 public class SorterFactory <K extends Comparable<K>>{
-    private final VectorViewManager<K> vectorViewManager;
     private final ActionManager<K> actionManager;
 
     public SorterFactory(){
-        this.vectorViewManager = new VectorViewManager<>(200,300,70);
+        VectorViewManager<K> vectorViewManager = new VectorViewManager<>(100, 100, Util.SIDELENGTH);
         this.actionManager = new ActionManager<>(vectorViewManager);
     }
 
