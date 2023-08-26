@@ -1,6 +1,6 @@
 ## ALgorithms and Data Structures
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This project aims to give an implementation of some basic data structures and sort algorithms, with learning purposes
 
 ## Folder Structure
 
