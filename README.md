@@ -1,4 +1,4 @@
-## ALgorithms and Data Structures
+## Algorithms and Data Structures
 
 This project aims to give an implementation of some basic data structures and sort algorithms, with learning purposes
 
