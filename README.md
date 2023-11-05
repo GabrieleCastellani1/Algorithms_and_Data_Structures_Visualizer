@@ -1,6 +1,6 @@
 ## Algorithms and Data Structures
 
-This project aims to give an implementation of some basic data structures and sort algorithms, with a simple visualization in pure Swing. For learning purposes.
+This project aims to give an implementation of some basic data structures and sort algorithms, with a simple visualization in pure Swing. For learning purposes. The project is developed following the Model-View-Controller pattern.
 
 ## Folder Structure
 
