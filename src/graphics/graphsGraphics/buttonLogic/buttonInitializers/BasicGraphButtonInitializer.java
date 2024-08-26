@@ -2,41 +2,69 @@ package graphics.graphsGraphics.buttonLogic.buttonInitializers;
 
 import logic.graphs.AbstractGraph;
 import logic.graphs.Node;
-import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
-public class BasicGraphButtonInitializer implements ButtonInitializer {
-    protected final List<Component> allComponents;
+public class BasicGraphButtonInitializer extends ButtonInitializer {
+    protected final List<ButtonConfiguration> allComponents;
 
-    public <K> BasicGraphButtonInitializer(AbstractGraph<K> graph) {
+    public <K> BasicGraphButtonInitializer(List<AbstractGraph<K>> graphs) {
 
-        JButton BFSButton = Util.createButton(600, 0, 200, 50, "BFS");
+        JButton BFSButton = new JButton();
+        BFSButton.setMaximumSize(new Dimension(200, 50));
+        BFSButton.setPreferredSize(new Dimension(200, 50));
+        BFSButton.setText("BFS");
 
-        JTextField BFSNodeText = Util.createTextField(550, 0, 50, 50);
+        GridBagConstraints c1 = new GridBagConstraints();
 
-        JButton DFSButton = Util.createButton(600, 50, 200, 50, "DFS");
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.gridx = xCoord;
+        c1.gridy = yCoord;
+
+        JTextField BFSNodeText = new JTextField();
+        BFSNodeText.setMaximumSize(new Dimension(50, 50));
+        BFSNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c2 = new GridBagConstraints();
+
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridx = xCoord+1;
+        c2.gridy = yCoord;
+        yCoord += 1;
+
+        JButton DFSButton = new JButton();
+        DFSButton.setMaximumSize(new Dimension(200, 50));
+        DFSButton.setPreferredSize(new Dimension(200, 50));
+        DFSButton.setText("DFS");
 
         BFSButton.addActionListener(e -> {
-            Optional<Node<K>> optionalNode = graph.findNode((K) BFSNodeText.getText());
-            optionalNode.ifPresent(graph::BFS);
+            Optional<Node<K>> optionalNode = graphs.get(0).findNode((K) BFSNodeText.getText());
             BFSNodeText.setText("");
+            new Thread(()-> optionalNode.ifPresent(graphs.get(0)::BFS)).start();
         });
 
+        GridBagConstraints c3 = new GridBagConstraints();
 
-        DFSButton.addActionListener(e -> graph.DFS());
+        c3.fill = GridBagConstraints.HORIZONTAL;
+        c3.gridx = xCoord;
+        c3.gridy = yCoord;
+        yCoord += 1;
+
+        DFSButton.addActionListener(e -> {
+            new Thread(() -> graphs.get(0).DFS()).start();
+        });
 
         allComponents = List.of(
-                BFSButton,
-                BFSNodeText,
-                DFSButton
+                new ButtonConfiguration(BFSButton,c1),
+                new ButtonConfiguration(BFSNodeText,c2),
+                new ButtonConfiguration(DFSButton, c3)
         );
     }
 
-    public List<Component> getAllComponents() {
+    public List<ButtonConfiguration> getAllComponents() {
         return allComponents;
     }
 }

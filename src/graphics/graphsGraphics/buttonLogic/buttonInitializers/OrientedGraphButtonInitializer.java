@@ -7,21 +7,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class OrientedGraphButtonInitializer implements ButtonInitializer {
+public class OrientedGraphButtonInitializer extends ButtonInitializer {
 
-    protected final List<Component> allComponents;
+    protected final List<ButtonConfiguration> allComponents;
 
     public OrientedGraphButtonInitializer(OrientedGraph<?> graph){
 
-        JButton KosarajuButton = Util.createButton(600, 0, 200, 50, "Kosaraju");
+        JButton KosarajuButton = new JButton();
+        KosarajuButton.setMaximumSize(new Dimension(200, 50));
+        KosarajuButton.setPreferredSize(new Dimension(200, 50));
+        KosarajuButton.setText("Kosaraju");
 
-        KosarajuButton.addActionListener(e -> graph.Kosaraju());
+        GridBagConstraints c1 = new GridBagConstraints();
 
-        allComponents = List.of(KosarajuButton);
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.gridx = xCoord;
+        c1.gridy = yCoord;
+        yCoord += 1;
+
+        KosarajuButton.addActionListener(e -> new Thread(graph::Kosaraju).start());
+
+        allComponents = List.of(new ButtonConfiguration(KosarajuButton,c1));
     }
 
     @Override
-    public List<Component> getAllComponents() {
+    public List<ButtonConfiguration> getAllComponents() {
         return allComponents;
     }
 }

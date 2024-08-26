@@ -82,6 +82,8 @@ public class Util {
     public static JButton createButton(int x, int y, String text){
         JButton Button = new JButton();
         Button.setBounds(x, y, BUTTONWIDTH, BUTTONHEIGHT);
+        Button.setMaximumSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
+        Button.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
         Button.setText(text);
         return Button;
     }
@@ -89,19 +91,9 @@ public class Util {
     public static JButton createButton(int x, int y, int width, int height, String text){
         JButton Button = new JButton();
         Button.setBounds(x, y, width, height);
+        Button.setMaximumSize(new Dimension(width, height));
+        Button.setPreferredSize(new Dimension(width, height));
         Button.setText(text);
         return Button;
-    }
-
-    public static JTextField createTextField(int x, int y){
-        JTextField text = new JTextField();
-        text.setBounds(x, y, BUTTONWIDTH, BUTTONHEIGHT);
-        return text;
-    }
-
-    public static JTextField createTextField(int x, int y, int width, int height){
-        JTextField text = new JTextField();
-        text.setBounds(x, y, width, height);
-        return text;
     }
 }

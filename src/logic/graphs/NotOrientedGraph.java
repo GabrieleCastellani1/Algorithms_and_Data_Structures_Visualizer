@@ -34,6 +34,7 @@ public class NotOrientedGraph<K> extends AbstractGraph<K> {
         Optional<Node<K>> secondOptionalNode = findNode(key2);
         if (firstOptionalNode.isPresent() && secondOptionalNode.isPresent()) {
             firstOptionalNode.get().nodes.add(secondOptionalNode.get());
+            secondOptionalNode.get().nodes.add(firstOptionalNode.get());
             createForceGraph();
         }
     }

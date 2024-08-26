@@ -17,6 +17,7 @@ public class GraphMenu extends JFrame {
         super();
         initializeMenu();
 
+
         JButton abstractGraphButton = Util.createButton(300,100,200, 50, "Not Oriented Graph");
 
         abstractGraphButton.addActionListener(e -> createGraph(GraphType.ABSTRACT_GRAPH));
@@ -68,6 +69,7 @@ public class GraphMenu extends JFrame {
                 return List.of(factory.createOrientedGraph(new ArrayList<>()));
             case WEIGHTED_NOT_ORIENTED_GRAPH:
                 return List.of(factory.createWeightedGraph(new ArrayList<>(), new ArrayList<>(), EdgeInsertType.DOUBLE));
+            //TODO: fix this shit
             case WEIGHTED_ORIENTED_GRAPH:
                 return List.of(factory.createOrientedGraph(new ArrayList<>()), factory.createWeightedGraph(new ArrayList<>(), new ArrayList<>(), EdgeInsertType.SINGLE));
                 default:

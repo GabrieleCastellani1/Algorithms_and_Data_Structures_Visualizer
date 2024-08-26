@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class IOButtonInitializer<K> implements ButtonInitializer {
+public class IOButtonInitializer<K> extends ButtonInitializer {
     private final List<AbstractGraph<K>> graphs;
 
     public IOButtonInitializer(List<AbstractGraph<K>> graphs) {
@@ -18,32 +18,88 @@ public class IOButtonInitializer<K> implements ButtonInitializer {
     }
 
     @Override
-    public List<Component> getAllComponents() {
+    public List<ButtonConfiguration> getAllComponents() {
         return initializeIOButtons(graphs);
     }
 
-    public List<Component> initializeAddNodeButton(List<AbstractGraph<K>> graphs){
-        JButton insertNodeButton = Util.createButton(600, 0, 200, 50, "Inserisci nodo");
+    public List<ButtonConfiguration> initializeAddNodeButton(List<AbstractGraph<K>> graphs){
 
-        JTextField insertNodeText = Util.createTextField(550,0, 50, 50);
+        JButton insertNodeButton = new JButton();
+        insertNodeButton.setMaximumSize(new Dimension(200, 50));
+        insertNodeButton.setPreferredSize(new Dimension(200, 50));
+        insertNodeButton.setText("Inserisci nodo");
+
+        GridBagConstraints c1 = new GridBagConstraints();
+
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.gridx = xCoord;
+        c1.gridy = yCoord;
+
+        JTextField insertNodeText = new JTextField();
+        insertNodeText.setMaximumSize(new Dimension(50, 50));
+        insertNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c2 = new GridBagConstraints();
+
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridx = xCoord+1;
+        c2.gridy = yCoord;
+        yCoord += 1;
 
         insertNodeButton.addActionListener(e -> {
                 graphs.get(0).addNode((K) insertNodeText.getText());
                 insertNodeText.setText("");
         });
 
-        return List.of(insertNodeButton, insertNodeText);
+        return List.of(
+                new ButtonConfiguration(insertNodeButton,c1),
+                new ButtonConfiguration(insertNodeText,c2)
+        );
     }
 
-    public List<Component> initializeAddEdgeButton(List<AbstractGraph<K>> graphs){
+    public List<ButtonConfiguration> initializeAddEdgeButton(List<AbstractGraph<K>> graphs){
 
-        JButton addEdgeButton = Util.createButton(600, 50, 200, 50, "Inserisci arco");
+        JButton addEdgeButton = new JButton();
+        addEdgeButton.setMaximumSize(new Dimension(200, 50));
+        addEdgeButton.setPreferredSize(new Dimension(200, 50));
+        addEdgeButton.setText("Inserisci arco");
 
-        JTextField insertFirstNodeText = Util.createTextField(450, 50, 50, 50);
+        GridBagConstraints c1 = new GridBagConstraints();
 
-        JTextField insertSecondNodeText = Util.createTextField(500, 50, 50, 50);
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.gridx = xCoord;
+        c1.gridy = yCoord;
 
-        JTextField insertWeightText = Util.createTextField(550, 50, 50, 50);
+        JTextField insertFirstNodeText = new JTextField();
+        insertFirstNodeText.setMaximumSize(new Dimension(50, 50));
+        insertFirstNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c2 = new GridBagConstraints();
+
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridx = xCoord + 1;
+        c2.gridy = yCoord;
+
+        JTextField insertSecondNodeText = new JTextField();
+        insertSecondNodeText.setMaximumSize(new Dimension(50, 50));
+        insertSecondNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c3 = new GridBagConstraints();
+
+        c3.fill = GridBagConstraints.HORIZONTAL;
+        c3.gridx = xCoord + 2;
+        c3.gridy = yCoord;
+
+        JTextField insertWeightText = new JTextField();
+        insertWeightText.setMaximumSize(new Dimension(50, 50));
+        insertWeightText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c4 = new GridBagConstraints();
+
+        c4.fill = GridBagConstraints.HORIZONTAL;
+        c4.gridx = xCoord + 3;
+        c4.gridy = yCoord;
+        yCoord += 1;
 
         addEdgeButton.addActionListener(e -> {
             graphs.forEach(g -> g.addEdge(
@@ -57,13 +113,36 @@ public class IOButtonInitializer<K> implements ButtonInitializer {
                 insertWeightText.setText("");
         });
 
-        return List.of(addEdgeButton, insertFirstNodeText, insertSecondNodeText, insertWeightText);
+        return List.of(
+                new ButtonConfiguration(addEdgeButton,c1),
+                new ButtonConfiguration(insertFirstNodeText,c2),
+                new ButtonConfiguration(insertSecondNodeText,c3),
+                new ButtonConfiguration(insertWeightText,c4)
+        );
     }
 
-    public List<Component> initializeDeleteNodeButton(List<AbstractGraph<K>> graphs){
-        JButton deleteNodeButton = Util.createButton(600, 100,200,50, "Elimina nodo");
+    public List<ButtonConfiguration> initializeDeleteNodeButton(List<AbstractGraph<K>> graphs){
+        JButton deleteNodeButton = new JButton();
+        deleteNodeButton.setMaximumSize(new Dimension(200, 50));
+        deleteNodeButton.setPreferredSize(new Dimension(200, 50));
+        deleteNodeButton.setText("Elimina nodo");
 
-        JTextField deleteNodeText = Util.createTextField(550, 100, 50, 50);
+        GridBagConstraints c1 = new GridBagConstraints();
+
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.gridx = xCoord;
+        c1.gridy = yCoord;
+
+        JTextField deleteNodeText = new JTextField();
+        deleteNodeText.setMaximumSize(new Dimension(50, 50));
+        deleteNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c2 = new GridBagConstraints();
+
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridx = xCoord + 1;
+        c2.gridy = yCoord;
+        yCoord += 1;
 
         deleteNodeButton.addActionListener(e -> {
                 Optional<Node<K>> node = graphs.get(0).findNode((K) deleteNodeText.getText());
@@ -71,15 +150,45 @@ public class IOButtonInitializer<K> implements ButtonInitializer {
                 deleteNodeText.setText("");
         });
 
-        return List.of(deleteNodeButton, deleteNodeText);
+        return List.of(
+                new ButtonConfiguration(deleteNodeButton,c1),
+                new ButtonConfiguration(deleteNodeText,c2)
+        );
     }
 
-    public List<Component> initializeDeleteEdgeButton(List<AbstractGraph<K>> graphs){
-        JButton deleteEdgeButton = Util.createButton(600, 150,200,50, "Elimina arco");
+    public List<ButtonConfiguration> initializeDeleteEdgeButton(List<AbstractGraph<K>> graphs){
 
-        JTextField deleteFirstNodeText = Util.createTextField(500, 150, 50, 50);
+        JButton deleteEdgeButton = new JButton();
+        deleteEdgeButton.setMaximumSize(new Dimension(200, 50));
+        deleteEdgeButton.setPreferredSize(new Dimension(200, 50));
+        deleteEdgeButton.setText("Elimina arco");
 
-        JTextField deleteSecondNodeText = Util.createTextField(550, 150, 50, 50);
+        GridBagConstraints c1 = new GridBagConstraints();
+
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.gridx = xCoord;
+        c1.gridy = yCoord;
+
+        JTextField deleteFirstNodeText = new JTextField();
+        deleteFirstNodeText.setMaximumSize(new Dimension(50, 50));
+        deleteFirstNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c2 = new GridBagConstraints();
+
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridx = xCoord + 1;
+        c2.gridy = yCoord;
+
+        JTextField deleteSecondNodeText = new JTextField();
+        deleteSecondNodeText.setMaximumSize(new Dimension(50, 50));
+        deleteSecondNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c3 = new GridBagConstraints();
+
+        c3.fill = GridBagConstraints.HORIZONTAL;
+        c3.gridx = xCoord + 2;
+        c3.gridy = yCoord;
+        yCoord += 1;
 
         deleteEdgeButton.addActionListener(e -> {
             Optional<Node<K>> node1 = graphs.get(0).findNode((K) deleteFirstNodeText.getText());
@@ -91,11 +200,15 @@ public class IOButtonInitializer<K> implements ButtonInitializer {
             deleteSecondNodeText.setText("");
         });
 
-        return List.of(deleteEdgeButton, deleteFirstNodeText, deleteSecondNodeText);
+        return List.of(
+                new ButtonConfiguration(deleteEdgeButton,c1),
+                new ButtonConfiguration(deleteFirstNodeText,c2),
+                new ButtonConfiguration(deleteSecondNodeText,c3)
+        );
     }
 
-    public List<Component> initializeIOButtons(List<AbstractGraph<K>> graphs){
-        List<Component> IOComponents = new ArrayList<>(initializeAddNodeButton(graphs));
+    public List<ButtonConfiguration> initializeIOButtons(List<AbstractGraph<K>> graphs){
+        List<ButtonConfiguration> IOComponents = new ArrayList<>(initializeAddNodeButton(graphs));
         IOComponents.addAll(initializeAddEdgeButton(graphs));
         IOComponents.addAll(initializeDeleteNodeButton(graphs));
         IOComponents.addAll(initializeDeleteEdgeButton(graphs));

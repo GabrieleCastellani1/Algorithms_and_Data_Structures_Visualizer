@@ -9,49 +9,90 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class WeightedGraphButtonInitializer implements ButtonInitializer {
-    protected final List<Component> allComponents;
+public class WeightedGraphButtonInitializer extends ButtonInitializer {
+    protected final List<ButtonConfiguration> allComponents;
     public <K> WeightedGraphButtonInitializer(WeightedGraph<K> graph){
 
-        JButton KruscalButton = Util.createButton(600, 0, 200, 50, "Kruscal");
+        JButton KruscalButton = new JButton();
+        KruscalButton.setMaximumSize(new Dimension(200, 50));
+        KruscalButton.setPreferredSize(new Dimension(200, 50));
+        KruscalButton.setText("Kruscal");
 
-        JButton PrimButton = Util.createButton(600, 50, 200, 50, "Prim");
+        GridBagConstraints c1 = new GridBagConstraints();
 
-        JTextField PrimNodeText = Util.createTextField(550, 50, 50,50);
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.gridx = xCoord;
+        c1.gridy = yCoord;
+        yCoord += 1;
 
-        JButton DijkstraButton = Util.createButton(600, 100, 200, 50, "Dijkstra");
+        JButton PrimButton = new JButton();
+        PrimButton.setMaximumSize(new Dimension(200, 50));
+        PrimButton.setPreferredSize(new Dimension(200, 50));
+        PrimButton.setText("Prim");
 
-        JTextField DijkstraNodeText = Util.createTextField(550, 100, 50,50);
+        GridBagConstraints c2 = new GridBagConstraints();
 
-        KruscalButton.addActionListener(e -> graph.Kruscal());
+        c2.fill = GridBagConstraints.HORIZONTAL;
+        c2.gridx = xCoord;
+        c2.gridy = yCoord;
+
+        JTextField PrimNodeText = new JTextField();
+        PrimNodeText.setMaximumSize(new Dimension(50, 50));
+        PrimNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c3 = new GridBagConstraints();
+
+        c3.fill = GridBagConstraints.HORIZONTAL;
+        c3.gridx = xCoord+1;
+        c3.gridy = yCoord;
+        yCoord += 1;
+
+        JButton DijkstraButton = new JButton();
+        DijkstraButton.setMaximumSize(new Dimension(200, 50));
+        DijkstraButton.setPreferredSize(new Dimension(200, 50));
+        DijkstraButton.setText("Dijkstra");
+
+        GridBagConstraints c4 = new GridBagConstraints();
+
+        c4.fill = GridBagConstraints.HORIZONTAL;
+        c4.gridx = xCoord;
+        c4.gridy = yCoord;
+
+        JTextField DijkstraNodeText = new JTextField();
+        DijkstraNodeText.setMaximumSize(new Dimension(50, 50));
+        DijkstraNodeText.setPreferredSize(new Dimension(50, 50));
+
+        GridBagConstraints c5 = new GridBagConstraints();
+
+        c5.fill = GridBagConstraints.HORIZONTAL;
+        c5.gridx = xCoord + 1;
+        c5.gridy = yCoord;
+        yCoord += 1;
+
+        PrimButton.addActionListener(e -> new Thread(graph::Kruscal).start());
 
         PrimButton.addActionListener(e -> {
             Optional<Node<K>> optionalNode = graph.findNode((K) PrimNodeText.getText());
-            optionalNode.ifPresent(graph::Prim);
+            optionalNode.ifPresent(kNode -> new Thread(() -> graph.Prim(kNode)).start());
             PrimNodeText.setText("");
         });
 
         DijkstraButton.addActionListener(e -> {
             Optional<Node<K>> optionalNode = graph.findNode((K) DijkstraNodeText.getText());
-            optionalNode.ifPresent(graph::Dijkstra);
+            optionalNode.ifPresent(kNode -> new Thread(() -> graph.Dijkstra(kNode)).start());
             DijkstraNodeText.setText("");
         });
 
-        ArrayList<Component> PrimComponents = new ArrayList<>();
-        ArrayList<Component> DijkstraComponents = new ArrayList<>();
-        PrimComponents.add(PrimButton);
-        PrimComponents.add(PrimNodeText);
-        DijkstraComponents.add(DijkstraButton);
-        DijkstraComponents.add(DijkstraNodeText);
-
-        allComponents = new ArrayList<>();
-        allComponents.addAll(PrimComponents);
-        allComponents.addAll(DijkstraComponents);
-        allComponents.add(KruscalButton);
+        allComponents = List.of(new ButtonConfiguration(KruscalButton, c1),
+                                new ButtonConfiguration(PrimButton, c2),
+                                new ButtonConfiguration(PrimNodeText, c3),
+                                new ButtonConfiguration(DijkstraButton, c4),
+                                new ButtonConfiguration(DijkstraNodeText, c5)
+                );
     }
 
     @Override
-    public List<Component> getAllComponents() {
+    public List<ButtonConfiguration> getAllComponents() {
         return allComponents;
     }
 }
