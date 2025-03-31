@@ -71,7 +71,7 @@ public class GraphMenu extends JFrame {
                 return List.of(factory.createWeightedGraph(new ArrayList<>(), new ArrayList<>(), EdgeInsertType.DOUBLE));
             //TODO: fix this shit
             case WEIGHTED_ORIENTED_GRAPH:
-                return List.of(factory.createOrientedGraph(new ArrayList<>()), factory.createWeightedGraph(new ArrayList<>(), new ArrayList<>(), EdgeInsertType.SINGLE));
+                return factory.createWeightedOrientedGraph();
                 default:
                     return null;
         }
