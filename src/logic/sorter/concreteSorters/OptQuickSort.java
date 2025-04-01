@@ -1,8 +1,9 @@
 package logic.sorter.concreteSorters;
 
-import graphics.action.AbstractAction;
+import graphics.sorterGraphics.ActionManager;
 import graphics.sorterGraphics.figures.Rectangle;
 import graphics.sorterGraphics.VectorPanel;
+import graphics.sorterGraphics.supportGraphics.SupportFrame;
 import logic.sorter.AbstractSorter;
 import util.Util;
 
@@ -11,17 +12,21 @@ import java.awt.*;
 import java.util.Vector;
 
 public class OptQuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
-        public K Select(Vector<K> A, int p, int q, int i){//deve avere in input un vettore senza ripetizioni da ordinare da 0 a A.length-1
-            Rectangle rect = P.highlightArea(p, q);
+    public OptQuickSort(Vector<K> v, ActionManager<K> actionManager) {
+        super(v, actionManager);
+    }
+
+    public K Select(Vector<K> A, int p, int q, int i){//deve avere in input un vettore senza ripetizioni da ordinare da 0 a A.length-1
+            Rectangle rect = actionManager.highlightArea(p, q);
             int r;
             if(p == q){
-                P.removeRect(rect);
+                actionManager.removeRect(rect);
                 return A.get(p);
             }else{
                 K x = findPivot(A, p, q);     //trova il perno ottimale
                 r = partition(A, p, q, x);     //usa partition modificato con il perno ottimale
 
-                P.removeRect(rect);
+                actionManager.removeRect(rect);
 
                 if(i == r){
                     return A.get(r);
@@ -39,7 +44,7 @@ public class OptQuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
                 V.add(median(A, p, q));  //richiamato ricorsivamente in findPivot;
             }else{
 
-                P.addLine(p+4);
+                actionManager.addLine(p+4);
 
                 V.add(median(A, p, p + 4));
                 createPivotArray(A,(p + 5), q, V);
@@ -52,12 +57,12 @@ public class OptQuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
             for(int i = 0; i <= n; i++){                 //subito dopo la metà (se è pari a metà precisa non c'è nessun elemento)
                 k = findMin(A);
 
-                P.addPin(v.indexOf(k));
+                actionManager.addPin(v.indexOf(k));
                 Util.waitAction(700);
 
                 A.remove(k);
             }
-            P.removeAllPins();
+            actionManager.removeAllPins();
             return k;
         }
 
@@ -82,27 +87,19 @@ public class OptQuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
 
             Vector<K> V = new Vector<>(n);                              //creo il vettore V a ogni chiamata
 
-            VectorPanel<K> supportPanel = new VectorPanel<>(V, null,200, 300, 70);
-            JFrame F = new JFrame();
-            F.setResizable(true);
-            F.setVisible(true);
-            F.setSize(500, 600);
-            supportPanel.setBackground(Color.white);
-            Util.setLocationToTopRight(F);
-            supportPanel.removeButtons();
-            F.add(supportPanel);
+            SupportFrame<K> supportFrame = new SupportFrame<>();
 
             createPivotArray(A,0,A.size()-1,V);            //e lo riempio con i mediani che trovo via via
-            P.removeAllLines();
+            actionManager.removeAllLines();
 
-            supportPanel.initializeSquares(V);
+            V.forEach(supportFrame::addSquare);
             Util.waitAction(2000);
 
             if(V.size() == 1){
-                F.dispose();
+                supportFrame.dispose();
                 return V.get(0);                                     //se non sono arrivato ad avere un solo valore
             }else{
-                F.dispose();
+                supportFrame.dispose();
                 return findPivot(V, 0, V.size()-1);               //faccio la chiamata ricorsiva
             }
         }
@@ -111,14 +108,14 @@ public class OptQuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
             int i = p-1;                                         //trova l'indice all'interno dell'array attraverso il metodo TrovaIndice
             int index = A.indexOf(x);
 
-            P.color(index, Color.RED);
+            actionManager.color(index, Color.RED);
 
             swap(A, index, q);
 
             for(int j = p; j <= q; j++){
 
                 Util.waitAction(1000);
-                P.addPin(j);
+                actionManager.addPin(j);
 
                 if(A.get(j).compareTo(x) <= 0){
                     i += 1;
@@ -126,18 +123,15 @@ public class OptQuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
                 }
             }
 
-            P.color(i, Color.GREEN);
+            actionManager.color(i, Color.GREEN);
 
-            P.removeAllPins();
+            actionManager.removeAllPins();
 
             return i;
         }
 
         public void swap(Vector<K> array, int i, int p){//scambio l'elemento in posizione i con l'elemento in posizione j nel vettore A
-            AbstractAction ac = P.swap(i, p);
-            while(ac.isRunning()){
-                System.console();
-            }
+            actionManager.swap(i, p);
 
             K n = array.get(i);
             array.set(i, array.get(p));
@@ -149,16 +143,16 @@ public class OptQuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
                 K x = Select(A,p,q,(q-p+1)/2+p);
                 int r = partition(A,p,q,x);
 
-                Rectangle rect1 = P.highlightArea(p, r-1);
-                Rectangle rect2 = P.highlightArea(r+1, q);
+                Rectangle rect1 = actionManager.highlightArea(p, r-1);
+                Rectangle rect2 = actionManager.highlightArea(r+1, q);
 
                 quickSort_ott(A,p,r-1);
 
-                P.removeRect(rect1);
+                actionManager.removeRect(rect1);
 
                 quickSort_ott(A,r+1,q);
 
-                P.removeRect(rect2);
+                actionManager.removeRect(rect2);
             }
         }
 

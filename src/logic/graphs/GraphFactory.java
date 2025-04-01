@@ -1,5 +1,6 @@
 package logic.graphs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GraphFactory {
@@ -13,5 +14,10 @@ public class GraphFactory {
 
     public <K> WeightedGraph<K> createWeightedGraph(List<Node<K>> nodes, List<WeightedEdge> edges, EdgeInsertType type) {
         return new WeightedGraph<>(nodes, edges, type);
+    }
+
+    public <K> List<AbstractGraph<K>> createWeightedOrientedGraph(){
+        ArrayList<Node<K>> list = new ArrayList<>();
+        return List.of(this.createOrientedGraph(list), this.createWeightedGraph(list, new ArrayList<>(), EdgeInsertType.SINGLE));
     }
 }

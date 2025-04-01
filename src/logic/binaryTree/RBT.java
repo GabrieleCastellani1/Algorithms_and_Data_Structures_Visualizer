@@ -3,7 +3,7 @@ package logic.binaryTree;
 import java.util.Objects;
 import java.util.Vector;
 
-import graphics.binaryTreeGraphics.TreePanel.Direction;
+import enums.Direction;
 
 import java.awt.Color;
 
@@ -49,7 +49,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
 
     public void LeftRotate(Node<K> y, Node<K> x) {//ruota x figlio destro di y a sinistra
 
-        treePanel.rotate(Direction.LEFT, y);
+        actionManager.rotate(Direction.LEFT, y);
 
         y.right = x.left;
         y.right.parent = y;
@@ -67,7 +67,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
 
     public void RightRotate(Node<K> y, Node<K> x) {//ruota x figlio sinistro di y a destra
 
-        treePanel.rotate(Direction.RIGHT, y);
+        actionManager.rotate(Direction.RIGHT, y);
 
         y.left = x.right;
         y.left.parent = y;
@@ -109,11 +109,11 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
                 y.right = z;
             }
         }
+
         z.color = Color.RED;
 
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
-
-        treePanel.insert(z.key, dir);
+        actionManager.setAllCoordinates(this.root);
+        actionManager.insert(z.key, this, dir);
 
         if (!z.equals(root)) {
             insertFixUp(z);
@@ -125,7 +125,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
             root = root.parent;
         }
 
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
+        actionManager.setAllCoordinates(this.root);
     }
 
     public void insertFixUp(Node<K> x) {
@@ -221,7 +221,7 @@ public class RBT<K extends Comparable<K>> extends AbstractTree<K> {
         while (Objects.requireNonNull(root).key != null && root.parent.key != null) {
             root = root.parent;
         }
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
+        actionManager.setAllCoordinates(this.root);
     }
 
     public void deleteFixUp(Node<K> z) {

@@ -10,12 +10,12 @@ import java.util.List;
 
 public class ButtonInitializerFactory {
     public ButtonInitializer createButtonInitializer(AbstractGraph<?> graph){
-        if(graph instanceof OrientedGraph){
+        if(graph instanceof OrientedGraph) {
             return new OrientedGraphButtonInitializer((OrientedGraph<?>) graph);
         }else if(graph instanceof WeightedGraph){
             return new WeightedGraphButtonInitializer((WeightedGraph<?>) graph);
         }else{
-            return new BasicGraphButtonInitializer(graph);
+            return null;
         }
     }
 
@@ -23,7 +23,7 @@ public class ButtonInitializerFactory {
         return new IOButtonInitializer<>(graphs);
     }
 
-    public ButtonInitializer createBasicGraphButtonInitializer(AbstractGraph<?> graph){
-        return new BasicGraphButtonInitializer(graph);
+    public <K> ButtonInitializer createBasicGraphButtonInitializer(List<AbstractGraph<K>> graphs){
+        return new BasicGraphButtonInitializer(graphs);
     }
 }

@@ -4,6 +4,7 @@ import logic.graphs.AbstractGraph;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractGraphPanel<K> extends JPanel {
@@ -12,6 +13,7 @@ public class AbstractGraphPanel<K> extends JPanel {
     public AbstractGraphPanel(List<AbstractGraph<K>> graphs){
         super();
         this.graphs = graphs;
+        this.setBackground(Color.WHITE);
     }
 
     @Override

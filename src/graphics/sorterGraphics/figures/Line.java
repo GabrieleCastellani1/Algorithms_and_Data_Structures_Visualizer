@@ -2,7 +2,7 @@ package graphics.sorterGraphics.figures;
 
 import java.awt.*;
 
-public class Line{
+public class Line implements Figure{
 
     int x;
     int y;
@@ -12,6 +12,7 @@ public class Line{
         this.y = y;
     }
 
+    @Override
     public void draw(Graphics2D g2d){
         g2d.drawLine(x, y-20, x, y + 100);
     }

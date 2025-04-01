@@ -1,6 +1,6 @@
 package logic.binaryTree;
 
-import graphics.binaryTreeGraphics.TreePanel.Direction;
+import enums.Direction;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -99,8 +99,8 @@ public class BST<K extends Comparable<K>> extends AbstractTree<K> {
                 y.right = z;
             }
         }
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
-        treePanel.insert(z.key, dir);
+        actionManager.setAllCoordinates(this.root);
+        actionManager.insert(z.key, this, dir);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class BST<K extends Comparable<K>> extends AbstractTree<K> {
         if (z != x) {
             z.key = x.key;
         }
-        this.setAllCoordinates(this.root, 390, 100, 200, 50);
+        actionManager.setAllCoordinates(this.root);
     }
 
     public ArrayList<K> Sort(K[] A) {//ordina un array creando un bst e facendo poi una InOrder di questo

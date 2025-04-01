@@ -129,9 +129,9 @@ public class OrientedGraph<K> extends AbstractGraph<K> {
         return list;
     }
 
-    public void DFS(Map<Node<K>, Node<K>> Pi,
-                    Map<Node<K>, Integer> i,
-                    Map<Node<K>, Integer> f) {
+    public void DFSKosaraju(Map<Node<K>, Node<K>> Pi,
+                            Map<Node<K>, Integer> i,
+                            Map<Node<K>, Integer> f) {
         int TIME = 0;
         for (Node<K> u : nodes) {
             Pi.put(u, null);
@@ -139,16 +139,16 @@ public class OrientedGraph<K> extends AbstractGraph<K> {
         }
         for (Node<K> v : nodes) {
             if (v.getColor().equals(Color.WHITE)) {
-                TIME = DFSVisit(v, TIME, i, f, Pi);
+                TIME = DFSVisitKosaraju(v, TIME, i, f, Pi);
             }
         }
     }
 
-    public int DFSVisit(Node<K> v,
-                        int TIME,
-                        Map<Node<K>, Integer> i,
-                        Map<Node<K>, Integer> f,
-                        Map<Node<K>, Node<K>> Pi) {
+    public int DFSVisitKosaraju(Node<K> v,
+                                int TIME,
+                                Map<Node<K>, Integer> i,
+                                Map<Node<K>, Integer> f,
+                                Map<Node<K>, Node<K>> Pi) {
         v.setColor(Color.LIGHT_GRAY);
 
         i.put(v, TIME);
@@ -160,7 +160,7 @@ public class OrientedGraph<K> extends AbstractGraph<K> {
 
             if (u.getColor().equals(Color.WHITE)) {
                 Pi.put(u, v);
-                TIME = DFSVisit(u, TIME, i, f, Pi);
+                TIME = DFSVisitKosaraju(u, TIME, i, f, Pi);
             }
             count += 1;
         }
@@ -186,7 +186,7 @@ public class OrientedGraph<K> extends AbstractGraph<K> {
         Map<Node<K>, Integer> i = new HashMap<>();
         Map<Node<K>, Integer> f = new HashMap<>();
 
-        DFS(Pi, i, f);
+        DFSKosaraju(Pi, i, f);
         for (Node<K> n : nodes) {
             n.setColor(Color.WHITE);
         }

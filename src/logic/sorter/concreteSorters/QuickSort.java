@@ -1,20 +1,22 @@
 package logic.sorter.concreteSorters;
 
-import graphics.action.AbstractAction;
+import graphics.sorterGraphics.ActionManager;
 import graphics.sorterGraphics.figures.Rectangle;
 import logic.sorter.AbstractSorter;
 import util.Util;
 
 import java.awt.*;
+import java.util.Vector;
 
 public class QuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
 
-        public void swap(int i, int p){
+    public QuickSort(Vector<K> v, ActionManager<K> actionManager) {
+        super(v, actionManager);
+    }
 
-            AbstractAction ac = P.swap(i, p);
-            while(ac.isRunning()){
-                System.console();
-            }
+    public void swap(int i, int p){
+
+            actionManager.swap(i, p);
 
             K n = v.elementAt(i);
             v.set(i, v.elementAt(p));
@@ -25,16 +27,16 @@ public class QuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
             if(p < q){
                 int r = Partition(p, q);
 
-                Rectangle rect1 = P.highlightArea(p, r-1);
-                Rectangle rect2 = P.highlightArea(r+1, q);
+                Rectangle rect1 = actionManager.highlightArea(p, r-1);
+                Rectangle rect2 = actionManager.highlightArea(r+1, q);
 
                 quickSort(p, r-1);
 
-                P.removeRect(rect1);
+                actionManager.removeRect(rect1);
 
                 quickSort(r+1, q);
 
-                P.removeRect(rect2);
+                actionManager.removeRect(rect2);
             }
         }
 
@@ -42,9 +44,9 @@ public class QuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
             int i = p-1;
             for(int j = p; j <= q; j++){
 
-                P.color(q, Color.GREEN);
+                actionManager.color(q, Color.GREEN);
                 Util.waitAction(1000);
-                P.addPin(j);
+                actionManager.addPin(j);
 
                 if(v.elementAt(j).compareTo(v.elementAt(q)) <= 0){
                     i += 1;
@@ -52,7 +54,7 @@ public class QuickSort <K extends Comparable<K>> extends AbstractSorter<K> {
                 }
             }
 
-            P.removeAllPins();
+            actionManager.removeAllPins();
 
             return i;
         }

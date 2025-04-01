@@ -5,5 +5,5 @@ public enum SorterType {
     INSERTIONSORT,
     MERGESORT,
     QUICKSORT,
-    OPTQUICKSORT
+    OPTIMIZEDQUICKSORT
 }

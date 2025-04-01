@@ -1,8 +1,9 @@
 package graphics.graphsGraphics.buttonLogic.buttonInitializers;
 
-import java.awt.*;
 import java.util.List;
 
-public interface ButtonInitializer {
-    public List<Component> getAllComponents();
+public abstract class ButtonInitializer {
+    static int xCoord = 0;
+    static int yCoord = 0;
+    public abstract List<ButtonConfiguration> getAllComponents();
 }

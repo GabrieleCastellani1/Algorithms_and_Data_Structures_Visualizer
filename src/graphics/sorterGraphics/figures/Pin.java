@@ -2,7 +2,7 @@ package graphics.sorterGraphics.figures;
 
 import java.awt.*;
 
-public class Pin{
+public class Pin implements Figure{
     int x;
     int y;
 
@@ -11,6 +11,7 @@ public class Pin{
         this.y = y;
     }
 
+    @Override
     public void draw(Graphics2D g2d){
         g2d.drawLine(x, y, x-20, y-20);
         g2d.drawLine(x, y, x+20, y-20);

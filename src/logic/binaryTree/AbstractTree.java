@@ -1,21 +1,24 @@
 package logic.binaryTree;
 
+import java.awt.*;
 import java.util.ArrayList;
 
+import graphics.binaryTreeGraphics.ActionManager;
 import graphics.binaryTreeGraphics.TreePanel;
+import util.Util;
 
 
 public abstract class AbstractTree<K extends Comparable<K>> {
     protected Node<K> root;
 
-    protected TreePanel<K> treePanel;
+    protected ActionManager actionManager;
 
     public Node<K> getRoot() {
         return root;
     }
 
-    public void setPanel(TreePanel<K> P) {
-        this.treePanel = P;
+    public void setActionManager(ActionManager actionManager) {
+        this.actionManager = actionManager;
     }
 
     public ArrayList<K> PreOrder() {
@@ -77,20 +80,9 @@ public abstract class AbstractTree<K extends Comparable<K>> {
         }
     }
 
-    //x = 390, y = 100, node = root, xDist = 200, yDist = 50
-    public void setAllCoordinates(Node<K> node, int x, int y, int xDist, int yDist) {
-        if (node != null) {
-            node.coordinate = new int[]{x, y};
-            setAllCoordinates(node.left, x - xDist, y + yDist, xDist / 2, yDist);
-            setAllCoordinates(node.right, x + xDist, y + yDist, xDist / 2, yDist);
-        }
-    }
-
-    public void TreeReconstruct(ArrayList<K> P, ArrayList<K> I) {
-        int xDist = 200;
-        int yDist = 50;
+    public void TreeReconstruct(ArrayList<K> P, ArrayList<K> I, int x, int y, int xDist, int yDist) {
         root = new Node<>(null);
-        root.coordinate = new int[]{390, 100};
+        root.coordinate = new int[]{x, y};
         TreeReconstructAux(P, I, 0, P.size(), 0, I.size(), root, xDist, yDist);
     }
 
@@ -126,6 +118,24 @@ public abstract class AbstractTree<K extends Comparable<K>> {
             }
         }
         return i;
+    }
+
+    public void printTree(Node<?> Tree, Graphics2D g2d) {
+        if (Tree != null) {
+
+            Util.drawFill(Tree, g2d);
+            Util.drawO(Tree, g2d);
+
+            if (!(Tree.getLeft() == null)) {
+                printTree(Tree.getLeft(), g2d);
+                Util.drawL(Tree, Tree.getLeft(), g2d);
+            }
+
+            if (!(Tree.getRight() == null)) {
+                printTree(Tree.getRight(), g2d);
+                Util.drawL(Tree, Tree.getRight(), g2d);
+            }
+        }
     }
 
     public abstract void insert(Node<K> node);

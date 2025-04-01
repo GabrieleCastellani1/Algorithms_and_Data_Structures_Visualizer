@@ -10,12 +10,11 @@ public class Util {
 
     public static int OVALDIAMETER = 30;
     public static int OVALRAY = OVALDIAMETER / 2;
-    public static int XSTART = 390;
-    public static int YSTART = 100;
     public static int FRAMEWIDTH = 800;
     public static int FRAMEHEIGHT = 600;
     public static int BUTTONWIDTH = 220;
     public static int BUTTONHEIGHT = 50;
+    public static int SIDELENGTH = 70;
     public static final double cSpring = 24;
     public static final double l = 130;
     public static final double cRep = 40000;
@@ -83,6 +82,8 @@ public class Util {
     public static JButton createButton(int x, int y, String text){
         JButton Button = new JButton();
         Button.setBounds(x, y, BUTTONWIDTH, BUTTONHEIGHT);
+        Button.setMaximumSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
+        Button.setPreferredSize(new Dimension(BUTTONWIDTH, BUTTONHEIGHT));
         Button.setText(text);
         return Button;
     }
@@ -90,19 +91,9 @@ public class Util {
     public static JButton createButton(int x, int y, int width, int height, String text){
         JButton Button = new JButton();
         Button.setBounds(x, y, width, height);
+        Button.setMaximumSize(new Dimension(width, height));
+        Button.setPreferredSize(new Dimension(width, height));
         Button.setText(text);
         return Button;
-    }
-
-    public static JTextField createTextField(int x, int y){
-        JTextField text = new JTextField();
-        text.setBounds(x, y, BUTTONWIDTH, BUTTONHEIGHT);
-        return text;
-    }
-
-    public static JTextField createTextField(int x, int y, int width, int height){
-        JTextField text = new JTextField();
-        text.setBounds(x, y, width, height);
-        return text;
     }
 }

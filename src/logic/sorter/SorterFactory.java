@@ -1,39 +1,37 @@
 package logic.sorter;
 
+import graphics.sorterGraphics.ActionManager;
+import graphics.sorterGraphics.VectorViewManager;
 import logic.sorter.concreteSorters.*;
+import util.Util;
 
 import java.util.Vector;
 
-public class SorterFactory {
-    public SorterFactory(){}
+public class SorterFactory <K extends Comparable<K>>{
+    private final ActionManager<K> actionManager;
 
-    public <K extends Comparable<K>> AbstractSorter<K> createInsertionSort(Vector<K> v){
-        AbstractSorter<K> ins = new InsertionSort<>();
-        ins.v = v;
-        return ins;
+    public SorterFactory(){
+        VectorViewManager<K> vectorViewManager = new VectorViewManager<>(100, 100, Util.SIDELENGTH);
+        this.actionManager = new ActionManager<>(vectorViewManager);
     }
 
-    public <K extends Comparable<K>> AbstractSorter<K> createSelectionSort(Vector<K> v){
-        AbstractSorter<K> sel = new SelectionSort<>();
-        sel.v = v;
-        return sel;
+    public AbstractSorter<K> createInsertionSort(Vector<K> v){
+        return new InsertionSort<>(v, actionManager);
     }
 
-    public <K extends Comparable<K>> AbstractSorter<K> createQuickSort(Vector<K> v){
-        AbstractSorter<K> quick = new QuickSort<>();
-        quick.v = v;
-        return quick;
+    public AbstractSorter<K> createSelectionSort(Vector<K> v){
+        return new SelectionSort<>(v, actionManager);
     }
 
-    public <K extends Comparable<K>> AbstractSorter<K> createMergeSort(Vector<K> v){
-        AbstractSorter<K> mergeSort = new MergeSort<>();
-        mergeSort.v = v;
-        return mergeSort;
+    public AbstractSorter<K> createQuickSort(Vector<K> v){
+        return new QuickSort<>(v, actionManager);
     }
 
-    public <K extends Comparable<K>> AbstractSorter<K> createOptQuickSort(Vector<K> v){
-        AbstractSorter<K> quickSort = new OptQuickSort<>();
-        quickSort.v = v;
-        return quickSort;
+    public AbstractSorter<K> createMergeSort(Vector<K> v){
+        return new MergeSort<>(v, actionManager);
+    }
+
+    public AbstractSorter<K> createOptQuickSort(Vector<K> v){
+        return new OptQuickSort<>(v, actionManager);
     }
 }
